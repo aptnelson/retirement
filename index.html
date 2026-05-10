@@ -1,262 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Retirement Planner</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Retirement Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="grain"></div>
 
-  <header>
-    <div class="logo">
-      <span class="logo-icon">◈</span>
-      <span class="logo-text">RetireWise</span>
+<!-- ===== Header ===== -->
+<div class="header">
+  <div class="header-icon">R</div>
+  <div>
+    <h1>Personal Retirement Calculator</h1>
+    <div class="subtitle">Monte Carlo Portfolio Simulator</div>
+  </div>
+  <a href="how-this-was-made.html" style="margin-left:auto;font-size:0.85rem;color:#2563eb;text-decoration:none;font-weight:500;">How this was made</a>
+</div>
+
+<!-- ===== Main Layout ===== -->
+<div class="layout">
+
+  <!-- ===== Controls ===== -->
+  <aside class="controls">
+
+    <div class="input-group">
+      <h3>Personal Info</h3>
+      <div class="field">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" value="1980-01-01">
+      </div>
+      <div class="field">
+        <label>Current Age</label>
+        <span id="currentAge" class="unit" style="font-weight:600;color:var(--text)">—</span>
+      </div>
+      <div class="field">
+        <label for="pay">Annual Pay</label>
+        <span class="unit">$</span>
+        <input type="number" id="pay" value="100000" step="1000" min="0">
+      </div>
+      <div class="field">
+        <label for="balance">Current Balance</label>
+        <span class="unit">$</span>
+        <input type="number" id="balance" value="200000" step="1000" min="0">
+      </div>
     </div>
-    <nav>
-      <a href="#inputs">Inputs</a>
-      <a href="#allocation">Allocation</a>
-      <a href="#projections">Projections</a>
-    </nav>
-  </header>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-label">FINANCIAL PLANNING TOOL</div>
-      <h1>Your Retirement<br /><em>Projection</em></h1>
-      <p class="hero-sub">Enter your details below to see your personalized asset allocation and wealth projection over time.</p>
-      <div class="hero-stat-row">
-        <div class="hero-stat">
-          <span class="hs-value" id="hero-balance">—</span>
-          <span class="hs-label">Projected Balance at Retirement</span>
-        </div>
-        <div class="hero-divider"></div>
-        <div class="hero-stat">
-          <span class="hs-value" id="hero-monthly">—</span>
-          <span class="hs-label">Est. Monthly Withdrawal</span>
-        </div>
-        <div class="hero-divider"></div>
-        <div class="hero-stat">
-          <span class="hs-value" id="hero-years">—</span>
-          <span class="hs-label">Years to Retirement</span>
+    <div class="input-group">
+      <h3>Savings &amp; Retirement</h3>
+      <div class="field">
+        <label for="risk">Risk Tolerance</label>
+        <select id="risk">
+          <option>High</option>
+          <option>Med-High</option>
+          <option>Medium</option>
+          <option selected>Low-Medium</option>
+          <option>Low</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="salaryGrowth">Salary Growth</label>
+        <input type="number" id="salaryGrowth" value="3" step="0.5" min="0" max="20">
+        <span class="unit">%</span>
+      </div>
+      <div class="field">
+        <label for="savingsRate">Savings Rate</label>
+        <input type="number" id="savingsRate" value="10" step="1" min="0" max="100">
+        <span class="unit">%</span>
+      </div>
+      <div class="field">
+        <label for="retireAt">Retire at Age</label>
+        <input type="number" id="retireAt" value="60" step="1" min="30" max="90">
+      </div>
+      <div class="field">
+        <label for="drawdown">Drawdown Rate</label>
+        <input type="number" id="drawdown" value="10" step="0.5" min="0" max="100" placeholder="4">
+        <span class="unit">%</span>
+      </div>
+      <div class="field">
+        <label for="replacement">Replacement Ratio</label>
+        <input type="number" id="replacement" value="" step="1" min="0" max="100" placeholder="80">
+        <span class="unit">%</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <h3>Market Assumptions</h3>
+      <div class="field">
+        <label for="expectedReturn">Expected Return</label>
+        <input type="number" id="expectedReturn" value="5" step="0.5" min="-10" max="30" placeholder="5.8">
+        <span class="unit">%</span>
+      </div>
+      <div class="field">
+        <label for="nextYear">Next Year Is</label>
+        <select id="nextYear">
+          <option>Great!</option>
+          <option>Good</option>
+          <option>Average</option>
+          <option>Flat</option>
+          <option>Bad</option>
+          <option selected>Horrible!</option>
+          <option>Who Knows?</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="retirementYear">Retirement Year</label>
+        <select id="retirementYear">
+          <option>Great!</option>
+          <option>Good</option>
+          <option>Average</option>
+          <option>Flat</option>
+          <option>Bad</option>
+          <option selected>Horrible!</option>
+          <option>Who Knows?</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <h3>Display</h3>
+      <div class="field">
+        <label for="graphMax">Graph Max Age</label>
+        <input type="number" id="graphMax" value="75" step="1" min="50" max="100">
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ===== Charts ===== -->
+  <main class="charts-area">
+
+    <!-- Summary Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Balance at Retirement</div>
+        <div class="stat-value" id="retireBalance">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Est. Monthly Income</div>
+        <div class="stat-value" id="monthlyIncome">—</div>
+      </div>
+    </div>
+
+    <!-- Insolvency Warning -->
+    <div class="insolvency-warn hidden" id="insolvencyWarn">
+      <span class="warn-icon">&#9888;</span>
+      <span>Portfolio depleted at age <strong id="insolvencyAge"></strong> under the base scenario.</span>
+    </div>
+
+    <!-- Chart 1: Monte Carlo -->
+    <div class="chart-card">
+      <div class="mc-controls">
+        <label for="trials">Trials</label>
+        <input type="number" id="trials" value="1000" min="10" max="5000" step="50">
+        <button class="btn-primary" id="runTrials">Run Trials</button>
+        <div class="progress-wrap hidden" id="progressWrap">
+          <div class="progress-bar" id="progressBar"></div>
         </div>
       </div>
-    </section>
-
-    <!-- INPUTS -->
-    <section id="inputs" class="section inputs-section">
-      <div class="section-label">01 / PERSONAL FACTS</div>
-      <h2>Tell Us About You</h2>
-      <div class="inputs-grid">
-
-        <div class="input-group">
-          <label for="dob">Date of Birth</label>
-          <input type="date" id="dob" value="1983-06-15" />
-        </div>
-
-        <div class="input-group">
-          <label for="salary">Current Annual Salary ($)</label>
-          <input type="number" id="salary" value="200000" step="1000" />
-        </div>
-
-        <div class="input-group">
-          <label for="balance">Current Account Balance ($)</label>
-          <input type="number" id="balance" value="1300000" step="1000" />
-        </div>
-
-        <div class="input-group">
-          <label for="salary-growth">Annual Salary Growth (%)</label>
-          <input type="number" id="salary-growth" value="3" step="0.1" min="0" max="20" />
-        </div>
-
-        <div class="input-group">
-          <label for="savings-rate">Savings Rate (%)</label>
-          <input type="number" id="savings-rate" value="20" step="1" min="0" max="100" />
-        </div>
-
-        <div class="input-group">
-          <label for="retire-age">Retire at Age</label>
-          <input type="number" id="retire-age" value="55" step="1" min="40" max="80" />
-        </div>
-
-        <div class="input-group">
-          <label for="ss-age">Start Social Security at Age</label>
-          <input type="number" id="ss-age" value="68" step="1" min="62" max="70" />
-        </div>
-
-        <div class="input-group">
-          <label for="drawdown">Retirement Drawdown Rate (%)</label>
-          <input type="number" id="drawdown" value="4" step="0.1" min="1" max="10" />
-        </div>
-
-        <div class="input-group">
-          <label for="replacement">Income Replacement Ratio (%)</label>
-          <input type="number" id="replacement" value="60" step="5" min="20" max="100" />
-        </div>
-
-        <div class="input-group">
-          <label for="risk">Risk Tolerance</label>
-          <select id="risk">
-            <option value="High">High</option>
-            <option value="Med-High">Med-High</option>
-            <option value="Medium" selected>Medium</option>
-            <option value="Low-Medium">Low-Medium</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-
-        <div class="input-group">
-          <label for="expected-return">Expected Annual Return (%)</label>
-          <input type="number" id="expected-return" value="5" step="0.5" min="1" max="15" />
-        </div>
-
+      <h2>Monte Carlo Confidence Bands</h2>
+      <div class="chart-wrap">
+        <canvas id="mcCanvas"></canvas>
       </div>
+    </div>
 
-      <button class="calc-btn" onclick="calculate()">Calculate My Projection ◈</button>
-    </section>
-
-    <!-- ALLOCATION -->
-    <section id="allocation" class="section allocation-section">
-      <div class="section-label">02 / RECOMMENDED ALLOCATION</div>
-      <h2>Asset Allocation</h2>
-      <div class="allocation-layout">
-        <div class="allocation-donut-wrap">
-          <canvas id="donutChart" width="280" height="280"></canvas>
-          <div class="donut-center">
-            <span id="stocks-pct-center">78%</span>
-            <span>Stocks</span>
-          </div>
-        </div>
-        <div class="allocation-details">
-          <div class="alloc-row">
-            <div class="alloc-dot stocks"></div>
-            <div class="alloc-info">
-              <span class="alloc-name">Stocks (IVV)</span>
-              <span class="alloc-desc">iShares Core S&P 500 ETF — Core equity exposure</span>
-            </div>
-            <span class="alloc-pct" id="stocks-pct">78%</span>
-          </div>
-          <div class="alloc-row">
-            <div class="alloc-dot bonds"></div>
-            <div class="alloc-info">
-              <span class="alloc-name">Bonds (AGG)</span>
-              <span class="alloc-desc">iShares Core US Aggregate Bond ETF — Stability & income</span>
-            </div>
-            <span class="alloc-pct" id="bonds-pct">22%</span>
-          </div>
-          <div class="alloc-rationale" id="alloc-rationale">
-            Based on your age and <strong>Medium</strong> risk tolerance, we suggest a balanced growth portfolio. Equity allocation decreases by approximately 1% per year as you approach retirement.
-          </div>
-
-          <div class="alloc-metrics">
-            <div class="am-item">
-              <span class="am-label">Expected Return</span>
-              <span class="am-val" id="blended-return">4.84%</span>
-            </div>
-            <div class="am-item">
-              <span class="am-label">Optimistic (+2%)</span>
-              <span class="am-val green" id="opt-return">6.84%</span>
-            </div>
-            <div class="am-item">
-              <span class="am-label">Conservative (−2%)</span>
-              <span class="am-val red" id="pess-return">2.84%</span>
-            </div>
-          </div>
-        </div>
+    <!-- Chart 2: Decomposition -->
+    <div class="chart-card">
+      <h2>Portfolio Decomposition</h2>
+      <div class="chart-wrap">
+        <canvas id="decompCanvas"></canvas>
       </div>
-    </section>
+    </div>
 
-    <!-- PROJECTIONS -->
-    <section id="projections" class="section projections-section">
-      <div class="section-label">03 / WEALTH PROJECTIONS</div>
-      <h2>Balance Over Time</h2>
-
-      <div class="chart-tabs">
-        <button class="tab active" data-tab="growth">Account Growth</button>
-        <button class="tab" data-tab="contributions">Contributions vs Growth</button>
-        <button class="tab" data-tab="range">Outcome Range</button>
+    <!-- Chart 3: Sensitivity -->
+    <div class="chart-card">
+      <div class="sens-header">
+        <h2>Sensitivity Analysis</h2>
+        <select id="displayMode">
+          <option selected>Balance</option>
+          <option>Investment Earnings</option>
+        </select>
       </div>
-
-      <div class="chart-panel active" id="tab-growth">
-        <div class="chart-info">
-          <p>Your total account balance from now through retirement and beyond, showing how contributions and investment returns build wealth — then how withdrawals draw it down.</p>
-        </div>
-        <div class="chart-container">
-          <canvas id="growthChart"></canvas>
-        </div>
+      <div class="chart-wrap">
+        <canvas id="sensCanvas"></canvas>
       </div>
+    </div>
 
-      <div class="chart-panel" id="tab-contributions">
-        <div class="chart-info">
-          <p>The split between your cumulative contributions (money you put in) and investment growth (returns earned), showing how compounding creates wealth over time.</p>
-        </div>
-        <div class="chart-container">
-          <canvas id="contribChart"></canvas>
-        </div>
-      </div>
-
-      <div class="chart-panel" id="tab-range">
-        <div class="chart-info">
-          <p>The range of possible outcomes based on market volatility — from optimistic (+2% above expected) to conservative (−2% below expected), helping you plan for uncertainty.</p>
-        </div>
-        <div class="chart-container">
-          <canvas id="rangeChart"></canvas>
-        </div>
-      </div>
-
-      <div class="retirement-marker" id="retirement-marker">
-        <div class="rm-badge">Retirement Age <span id="rm-age">55</span></div>
-      </div>
-    </section>
-
-    <!-- SUMMARY CARDS -->
-    <section class="section summary-section">
-      <div class="section-label">04 / KEY METRICS</div>
-      <h2>Summary</h2>
-      <div class="summary-grid" id="summary-grid">
-        <div class="sum-card">
-          <span class="sum-icon">◈</span>
-          <span class="sum-label">Balance at Retirement</span>
-          <span class="sum-val" id="sum-retire-bal">—</span>
-        </div>
-        <div class="sum-card">
-          <span class="sum-icon">◎</span>
-          <span class="sum-label">Monthly Withdrawal</span>
-          <span class="sum-val" id="sum-monthly">—</span>
-        </div>
-        <div class="sum-card">
-          <span class="sum-icon">◇</span>
-          <span class="sum-label">Total Contributions</span>
-          <span class="sum-val" id="sum-contrib">—</span>
-        </div>
-        <div class="sum-card">
-          <span class="sum-icon">○</span>
-          <span class="sum-label">Total Investment Growth</span>
-          <span class="sum-val" id="sum-growth">—</span>
-        </div>
-        <div class="sum-card">
-          <span class="sum-icon">▷</span>
-          <span class="sum-label">Est. Social Security Benefit</span>
-          <span class="sum-val" id="sum-ss">—</span>
-        </div>
-        <div class="sum-card">
-          <span class="sum-icon">△</span>
-          <span class="sum-label">Income at Retirement</span>
-          <span class="sum-val" id="sum-income">—</span>
-        </div>
-      </div>
-    </section>
   </main>
+</div>
 
-  <footer>
-    <p>RetireWise — For illustrative purposes only. Not financial advice.</p>
-  </footer>
+<!-- ===== Scripts ===== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="calc.js"></script>
+<script src="charts.js"></script>
+<script src="main.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>

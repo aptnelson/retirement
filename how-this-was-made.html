@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How This Was Made</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f8fafc; --card: #fff; --border: #e2e8f0; --text: #1e293b;
+      --muted: #64748b; --accent: #2563eb; --radius: 10px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .header {
+      background: var(--card); border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem;
+      box-shadow: var(--shadow); position: sticky; top: 0; z-index: 10;
+    }
+    .header h1 { font-size: 1.25rem; font-weight: 700; }
+    .header .subtitle { font-size: 0.82rem; color: var(--muted); }
+    .header-icon {
+      width: 32px; height: 32px; background: var(--accent); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 700; font-size: 1rem;
+    }
+    .back-link {
+      margin-left: auto; font-size: 0.85rem; color: var(--accent);
+      text-decoration: none; font-weight: 500;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .content {
+      max-width: 740px; margin: 2rem auto; padding: 0 1.25rem;
+    }
+    h2 {
+      font-size: 1.3rem; font-weight: 700; margin: 2.5rem 0 0.75rem;
+      padding-bottom: 0.4rem; border-bottom: 2px solid var(--border);
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; margin: 1.75rem 0 0.5rem; }
+    p, li { font-size: 0.95rem; color: #334155; }
+    p { margin-bottom: 0.85rem; }
+    ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: var(--accent); }
+    code {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      background: #f1f5f9; padding: 0.15em 0.4em; border-radius: 4px;
+      font-size: 0.88em; color: #0f172a;
+    }
+    pre {
+      background: #1e293b; color: #e2e8f0; padding: 1rem 1.25rem;
+      border-radius: var(--radius); overflow-x: auto; margin: 0.75rem 0 1.25rem;
+      font-size: 0.85rem; line-height: 1.6;
+    }
+    pre code { background: none; padding: 0; color: inherit; }
+    .callout {
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius);
+      padding: 1rem 1.15rem; margin: 1rem 0; font-size: 0.9rem;
+    }
+    .callout-title { font-weight: 600; color: var(--accent); margin-bottom: 0.3rem; }
+    .file-table { width: 100%; border-collapse: collapse; margin: 0.75rem 0 1.25rem; font-size: 0.9rem; }
+    .file-table th, .file-table td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+    .file-table th { font-weight: 600; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .timeline { list-style: none; margin: 1rem 0; padding: 0; }
+    .timeline li {
+      position: relative; padding: 0 0 1.5rem 2rem; border-left: 2px solid var(--border);
+    }
+    .timeline li:last-child { border-left: 2px solid transparent; padding-bottom: 0; }
+    .timeline li::before {
+      content: ''; position: absolute; left: -6px; top: 0.35rem;
+      width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+    }
+    .timeline .step-title { font-weight: 600; color: var(--text); }
+    .timeline .step-detail { color: #475569; font-size: 0.9rem; }
+    @media (max-width: 600px) { .content { padding: 0 0.75rem; } }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">R</div>
+  <div>
+    <h1>How This Was Made</h1>
+    <div class="subtitle">From Excel spreadsheet to live web app using Claude Code</div>
+  </div>
+  <a href="index.html" class="back-link">Back to Calculator</a>
+</div>
+
+<div class="content">
+
+<p>This retirement calculator started as an Excel spreadsheet (<code>Personal Retirement Calculator.xlsm</code>) with VBA macros, formulas, and charts. It was converted into the web app you see today using <strong>Claude Code</strong>, an AI programming tool made by Anthropic.</p>
+
+<p>This page explains the process so you can do the same kind of thing yourself.</p>
+
+<h2>What is Claude Code?</h2>
+
+<p>Claude Code is a command-line tool that lets you have a conversation with an AI (Claude) that can read your files, write code, run commands, and build things for you. Think of it as a very capable programmer sitting next to you at your computer.</p>
+
+<p>You talk to it in plain English. It reads your files, asks clarifying questions, writes code, and tests it. You stay in control the whole time &mdash; it asks for permission before doing anything significant.</p>
+
+<div class="callout">
+  <div class="callout-title">How is this different from ChatGPT?</div>
+  <p style="margin-bottom:0">ChatGPT runs in a browser and can only see what you paste into the chat window. Claude Code runs <em>on your computer</em> &mdash; it can directly read your spreadsheet, create files, start a web server, and deploy a website. It's the difference between texting a contractor photos vs. having them walk through your house.</p>
+</div>
+
+<h2>How the conversion happened</h2>
+
+<p>The whole process took about one conversation. Here's roughly what happened:</p>
+
+<ol class="timeline">
+  <li>
+    <div class="step-title">Analyze the spreadsheet</div>
+    <div class="step-detail">Claude Code opened the <code>.xlsm</code> file, read every sheet, extracted all formulas, identified the VBA macro, and mapped out how everything connects: which cells are inputs, which are calculations, what the charts display, and how the Monte Carlo simulation works.</div>
+  </li>
+  <li>
+    <div class="step-title">Create a project plan</div>
+    <div class="step-detail">It wrote a <code>CLAUDE.md</code> file &mdash; a detailed specification capturing every formula, parameter, chart definition, and edge case. This acts as the "blueprint" for the project, and Claude Code reads it automatically in future sessions.</div>
+  </li>
+  <li>
+    <div class="step-title">Build the web app</div>
+    <div class="step-detail">It created six files (HTML, CSS, and JavaScript) implementing all the math, three interactive charts, and a responsive layout. No frameworks, no build tools &mdash; just files that run directly in a browser.</div>
+  </li>
+  <li>
+    <div class="step-title">Verify the math</div>
+    <div class="step-detail">It extracted actual numbers from the spreadsheet and compared them against its own calculations, verifying that the sensitivity analysis balances match to the penny (e.g. $864,157.43 at age 60, $922,139.70 at age 61).</div>
+  </li>
+  <li>
+    <div class="step-title">Fix discrepancies</div>
+    <div class="step-detail">The spot-check revealed two issues: the expected return override was being applied incorrectly (replacing the whole blended return instead of just the stock return), and the Portfolio Decomposition chart was using smooth deterministic returns instead of the jagged stochastic returns the spreadsheet uses. Both were fixed.</div>
+  </li>
+  <li>
+    <div class="step-title">Deploy</div>
+    <div class="step-detail">It created a GitHub repository and deployed the site to GitHub Pages, making it available at a public URL.</div>
+  </li>
+</ol>
+
+<h2>What's in each file</h2>
+
+<table class="file-table">
+  <thead><tr><th>File</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><code>index.html</code></td><td>The page structure &mdash; all the input controls, chart areas, and layout</td></tr>
+    <tr><td><code>style.css</code></td><td>Visual styling &mdash; colors, spacing, responsive layout for mobile</td></tr>
+    <tr><td><code>calc.js</code></td><td>All the math &mdash; the FV function, asset allocation glide path, projections, percentile calculations. This is the "brain" that replicates your spreadsheet formulas.</td></tr>
+    <tr><td><code>worker.js</code></td><td>Runs the Monte Carlo simulation (1,000 trials) in a background thread so the page stays responsive while it computes</td></tr>
+    <tr><td><code>charts.js</code></td><td>Creates and updates the three Chart.js charts</td></tr>
+    <tr><td><code>main.js</code></td><td>Connects everything &mdash; reads your inputs, runs the calculations, updates the charts</td></tr>
+    <tr><td><code>CLAUDE.md</code></td><td>The project spec &mdash; every formula, parameter, and design decision. Claude Code reads this automatically when it works on this project.</td></tr>
+  </tbody>
+</table>
+
+<h2>How to make changes yourself</h2>
+
+<h3>Install Claude Code</h3>
+
+<p>You need Node.js installed first. Then open a terminal and run:</p>
+
+<pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+
+<p>You'll need an Anthropic API key or a Claude subscription. The setup process will walk you through it.</p>
+
+<h3>Start a session</h3>
+
+<p>Open a terminal, navigate to the project folder, and type:</p>
+
+<pre><code>cd ~/path/to/retirement-calculator
+claude</code></pre>
+
+<p>That's it. You're now in a conversation with Claude, and it can see all the project files.</p>
+
+<h3>Ask for changes in plain English</h3>
+
+<p>Just describe what you want. Some examples:</p>
+
+<pre><code># Change a default value
+"Change the default retirement age from 60 to 65"
+
+# Add a feature
+"Add a field for employer match percentage, where the employer
+matches 50% of contributions up to 6% of salary"
+
+# Fix something
+"The withdrawal calculation should use 4% as the default,
+not 10%"
+
+# Understand something
+"Explain how the asset allocation glide path works in calc.js"
+
+# Change the look
+"Make the charts taller and use a dark theme"</code></pre>
+
+<p>Claude Code will read the relevant files, make the changes, and explain what it did. It asks for your approval before modifying files.</p>
+
+<div class="callout">
+  <div class="callout-title">Tip: the CLAUDE.md file is your secret weapon</div>
+  <p style="margin-bottom:0">Claude Code reads <code>CLAUDE.md</code> at the start of every session. It contains all the formulas and design decisions. If you want to change how something fundamental works (like adding a new asset class), start by asking Claude to update the spec in CLAUDE.md first, then implement the change. This keeps everything consistent.</p>
+</div>
+
+<h3>Deploy updates</h3>
+
+<p>After making changes, just tell Claude Code:</p>
+
+<pre><code>"Commit these changes and push to GitHub"</code></pre>
+
+<p>GitHub Pages will automatically update within a minute or two.</p>
+
+<h2>Key things to know</h2>
+
+<ul>
+  <li><strong>You don't need to know how to code.</strong> Claude Code writes and modifies all the code. You just need to describe what you want clearly and verify the results make sense.</li>
+  <li><strong>You stay in control.</strong> It asks before changing files, running commands, or deploying. You can say no to anything.</li>
+  <li><strong>It makes mistakes sometimes.</strong> Just like any tool, it can get things wrong. That's why we spot-checked the math against the spreadsheet. When you see something off, just tell it &mdash; "that number looks wrong, it should be X" &mdash; and it will investigate and fix it.</li>
+  <li><strong>It remembers context within a session</strong> but starts fresh each time you run <code>claude</code>. The CLAUDE.md file is how it "remembers" the project across sessions.</li>
+  <li><strong>The spreadsheet is still the source of truth.</strong> If you find a discrepancy between the web app and the spreadsheet, the spreadsheet wins. Tell Claude Code to fix it.</li>
+</ul>
+
+<h2>Further reading</h2>
+
+<ul>
+  <li><a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank">Claude Code documentation</a></li>
+  <li><a href="https://github.com/anthropics/claude-code" target="_blank">Claude Code on GitHub</a> (report issues here)</li>
+  <li><a href="https://www.chartjs.org/docs/latest/" target="_blank">Chart.js documentation</a> (the charting library used)</li>
+</ul>
+
+</div>
+
+</body>
+</html>
